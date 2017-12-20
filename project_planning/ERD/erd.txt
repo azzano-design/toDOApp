@@ -1,0 +1,24 @@
+-------------------
+# | Users         |
+-------------------
+id.               |
+email             |
+password          |
+___________________
+
+
+
+-------------------
+# | List items      |
+-------------------
+id.                 |
+name                |
+category            |
+rating
+review (star rating)
+action
+location
+time_to_complete
+time_created
+___________________
+

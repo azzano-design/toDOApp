@@ -1,6 +1,6 @@
-User stories
+# User stories
 
-As a user if I enter
+As a user if I enter a category - and then start typing - my search will return something in that category.
 
 As a user, I want to be able to make searches before logging in - and save only the search I like to my list and add a time to do it by.
 
@@ -8,11 +8,13 @@ I want to have one todo list - but be able to filter list items by the time I wa
 
 I want to be able to edit my todo list - and remove items I've completed or assign them new time to complete them by.
 
-I want a reminder for items with a set time - if I have not removed it before that time.
+I should be able to change the category for the list item - even after having added it to my list.
 
-(Google Keep example) - I want to add other users, to collaborate with -
+I want a reminder for items with a set time - if I have not removed it before that time.
 
 I want additional info about task to be available after I've saved task to my list - but only after I've selected that task.
 
 Finished tasks get saved into timeline for review (feel good) - and prompts to leave review of activity
+
+As a user I want to be notified at the email I set in the users setting
 

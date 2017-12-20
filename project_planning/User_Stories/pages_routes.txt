@@ -1,0 +1,21 @@
+# Pages
+
+- Home (Search)
+- Login / Register
+- ToDo List page
+
+
+# Routes
+
+app.GET(Homepage Search)
+
+app.POST(login/register)
+app.GET(login/register)
+
+app.GET(TODO list)
+app.POST(adding to list)
+app.PUT(editing the list)
+
+app.DELETE(remove task)
+
+
