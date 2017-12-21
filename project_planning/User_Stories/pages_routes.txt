@@ -25,3 +25,5 @@ app.DELETE(remove task)
 # APIS
 
 www.episodate.com/api (perfect for searching shows)
+https://developers.themoviedb.org/3/getting-started/introduction (movies and shows)
+
