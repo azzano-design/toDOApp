@@ -1,0 +1,11 @@
+<h1>To-do App</h1>
+<% if (!user) { %>
+  <a href="/login">Login</a>
+  <a href="/register">Register</a>
+<% } else  {%>
+  <form method="POST" action="/logout">
+    <%=  %>
+    <input type="submit" value="LogOut">
+  </form>
+  <a href=""></a>
+<% } %>
