@@ -35,6 +35,33 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
+var users = {
+  "user1": {
+    id: "user1",
+    email: "user@example.com",
+    password: "123"
+    //password: "$2a$10$4EMS7aLyrN71l9HV7igC9eG9pU1mJOzUPme6JzMsnWfyGX5AwcIWK"
+  },
+ "user2": {
+    id: "user2",
+    email: "user2@example.com",
+    password: "123"
+    //password: "$2a$10$HjnbCvHTr6UqRQy9g6Ec7.WTupfeBHRUFs4ciz//GzVE3/DH6FCGW"
+  }
+}
+
+
+function generateRandomString() {
+  let alphabet = 'ABCDEFGHIJKLMNOPQRSTUWVXYZ';
+  alphabet = alphabet + alphabet.toLowerCase() + '0123456789';
+  let randomString = '';
+  for(var i = 0 ; i < 6; i++) {
+    var index = Math.floor(Math.random() * alphabet.length);
+    randomString += alphabet[index];
+  }
+  return randomString;
+}
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
@@ -43,13 +70,52 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Register Page
 app.get('/register', (req, res) => {
   res.render("register");
 });
 
+app.post("/register", (req, res) => {
+  let id = generateRandomString();
+  let firstName = req.body.firstname;
+  let lastName = req.body.lastname;
+  let email = req.body.email;
+  let password = req.body.password;
+
+  knex('users').insert({id: id, firstname: firstName, lastname: lastName, email: email, password: password});
+  res.redirect("/login");
+})
+
+// Login Page
 app.get("/login", (req, res) => {
   res.render("login");
 });
+
+app.post("/login", (req, res) => {
+  let userEmail = req.body.email;
+  let userPassword = req.body.password;
+
+  console.log(userEmail)
+  console.log(userPassword)
+
+  res.redirect("/users");
+})
+
+// Dashboard Page
+app.get("/users", (req, res) => {
+  knex.select('*').from('users')
+  .asCallback(function(err, results) {
+    if(err) throw err;
+    let templateVars = {
+      users: results
+    }
+    res.render("dashboard", templateVars);
+    console.log(results);
+  })
+
+});
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

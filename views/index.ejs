@@ -13,9 +13,17 @@
 
   <body>
     <header>
-
+      <% include ../views/header %>
     </header>
 
     <h1>Hello World!</h1>
+    <div class="wrap">
+      <div class="search">
+        <input type="text" class="searchTerm" placeholder="What are you looking for?">
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
   </body>
 </html>
