@@ -82,8 +82,13 @@ app.post("/register", (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
-  knex('users').insert({id: id, firstname: firstName, lastname: lastName, email: email, password: password});
-  res.redirect("/login");
+  knex('users').insert({firstname: firstName, lastname: lastName, email: email, password: password})
+  .then(function(results){
+    res.redirect("/login");
+  })
+  .catch(function(err){
+    console.log(err);
+  })
 })
 
 // Login Page
@@ -112,7 +117,6 @@ app.get("/users", (req, res) => {
     res.render("dashboard", templateVars);
     console.log(results);
   })
-
 });
 
 
