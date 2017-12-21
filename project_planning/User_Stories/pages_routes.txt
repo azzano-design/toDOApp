@@ -9,17 +9,28 @@
 
 # Routes
 
-app.GET(Homepage Search)
+____________________________________________________________________
 
+PATH          |  METHOD  | ACTION
+____________________________________________________________________
+
+/register     |  GET     | register.ejs
+/register     |  POST    | After saving, redirect to the Login Page
+/ToDo         |  GET     | index.ejs
+/Todo/:id     |  GET     | show.ejs
+/Todo/new     |  GET     | createtodo.ejs
+/User/:userid |  GET     | usershow.ejs
+
+app.GET(Homepage Search)
 app.POST(login/register)
 app.GET(login/register)
-
 app.GET(TODO list)
 app.POST(adding to list)
 app.POST(completing the task)
 app.PUT(editing the list)
-
 app.DELETE(remove task)
+____________________________________________________________________
+
 
 
 # APIS
