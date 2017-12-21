@@ -20,5 +20,7 @@ action
 location
 time_to_complete
 time_created
+if_completed
+date_completed
 ___________________
 

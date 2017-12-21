@@ -3,6 +3,8 @@
 - Home (Search)
 - Login / Register
 - ToDo List page
+- Completed Tasks
+- Profile / Settings
 
 
 # Routes
@@ -14,8 +16,12 @@ app.GET(login/register)
 
 app.GET(TODO list)
 app.POST(adding to list)
+app.POST(completing the task)
 app.PUT(editing the list)
 
 app.DELETE(remove task)
 
 
+# APIS
+
+www.episodate.com/api (perfect for searching shows)
