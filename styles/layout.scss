@@ -132,5 +132,28 @@ ul.menu li {
   box-shadow: none;
 }
 
+$list-color : red;
+
+#list .list-item{
+  background:$list-color;
+  color:#fff;
+  border-radius:6px;
+}
+
+#list .list-item:nth-child(2) {
+  background:darken($list-color, 10%);
+}
+#list .list-item:nth-child(3) {
+  background:darken($list-color, 20%);
+}
+#list .list-item:nth-child(4) {
+  background:darken($list-color, 30%);
+}
+#list .list-item:nth-child(5) {
+  background:darken($list-color, 40%);
+}
+#list .list-item:nth-child(6) {
+  background:darken($list-color, 50%);
+}
 
 // Login
