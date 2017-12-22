@@ -157,3 +157,25 @@ $list-color : red;
 }
 
 // Login
+
+// Dashboard
+
+  // List items
+  .todo-list-item-header input#checkBox {
+      float: right;
+  }
+
+
+
+  *[data-catagory-eat] {
+    background:blue !important;
+  }
+  *[data-catagory-watch] {
+    background:red !important;
+  }
+  *[data-catagory-read] {
+    background:yellow !important;
+  }
+  *[data-catagory-buy] {
+    background:green !important;
+  }
