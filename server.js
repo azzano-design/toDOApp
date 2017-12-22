@@ -84,30 +84,37 @@ app.post("/register", (req, res) => {
 
   if(!firstName || !lastName || !username || !email || !req.body.password) {
     res.redirect("/register");
+    return;
   }
   knex('users').where({username: username}).orWhere({email: email}).then(function(users){
-    if(users.length) {
+    if (users.length) {
       res.status(400).send('Username already exists!');
-      return;
+    } else {
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+          if (err) {
+            console.log("bcrypt err:", err);
+            res.status(500).send("oh god bcrypt has The Mummy's Curse, why oh why");
+            return;
+          }
+          knex('users').insert({
+            firstname: firstName,
+            lastname: lastName,
+            email: email,
+            password: hash,
+            username: username
+          })
+          .then(function(results){
+            res.redirect("/login");
+          })
+          .catch(function(err){
+            console.log("database what now", err);
+            res.status(500).send("database ain't based; prolly yo data was bad");
+          })
+        });
+      });
     }
   })
-  bcrypt.genSalt(10, function(err, salt) {
-    bcrypt.hash(req.body.password, salt, function(err, hash) {
-        knex('users').insert({
-        firstname: firstName,
-        lastname: lastName,
-        email: email,
-        password: hash,
-        username: username
-      })
-      .then(function(results){
-        res.redirect("/login");
-      })
-      .catch(function(err){
-        console.log(err);
-      })
-    });
-  });
 })
 
 
@@ -126,21 +133,25 @@ app.post("/login", (req, res) => {
   const cookiename = req.session;
 
   knex('users').where({email: userEmail}).then(function(users){
-    if(users.length) {
+    if (users.length) {
       let user = users[0];
-      if(user.password === userPassword) {
+      if (bcrypt.compareSync(userPassword, user.password)) {
         req.session.user = {id: user.id, firstname: user.firstname, lastname: user.lastname, email: user.email, username: user.username};
         console.log(req.session.user);
         res.redirect('/users/'+user.username);
         return;
       } else {
+        // pw didn't match the hashed-pass in the DB
         res.status(400).send('Email or Password are incorrect!');
         return;
       }
+    } else {
+      // no users found for this email
+      res.status(400).send('Email or Password are incorrect!');
+      return;
     }
-    res.status(400).send('Email does not exist!');    //
-  })
-})
+  });
+});
 
 
 
