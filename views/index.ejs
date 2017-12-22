@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home Page</title>
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
-
+<% include ../partials/header %>
   <body>
-    <header>
-      <% include ../views/header %>
-    </header>
-
-    <h1>Hello World!</h1>
-    <div class="wrap">
-      <div class="search">
-        <input type="text" class="searchTerm" placeholder="What are you looking for?">
-        <button type="submit" class="searchButton">
-          <i class="fa fa-search"></i>
-        </button>
+    <div class="grid-container">
+      <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+          <header class="hero-search-filter">
+            <div class="hero-search-filter-content">
+              <img class="hero-search-filter-logo" src="https://placehold.it/160x80" alt="" />
+              <form class="hero-search-filter-form" action="">
+                <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                  <i class="fa fa-search"></i>
+                </button>
+              </form>
+              <ul class="hero-search-filter-menu menu align-center">
+                <li><a href="#"><i class="fa fa-cutlery" aria-hidden="true"></i> Restaurants</a></li>
+                <li><a href="#"><i class="fa fa-television" aria-hidden="true"></i> Watch</a></li>
+                <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Books</a></li>
+                <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase</a></li>
+              </ul>
+            </div>
+          </header>
+        </div>
       </div>
-    </div>
   </body>
 </html>
