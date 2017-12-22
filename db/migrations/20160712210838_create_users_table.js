@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
     table.string('email');
     table.string('password');
   });
-
 };
 
 exports.down = function(knex, Promise) {
