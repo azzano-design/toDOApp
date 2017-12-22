@@ -12,8 +12,8 @@ ___________________
 # | Lists         |
 -------------------
 id.               |
+name              |
 user_id           |
-list_items (list-item.id, list-item.id, )       |
 ___________________
 
 
@@ -22,6 +22,7 @@ ___________________
 # | List items     |
 -------------------
 id.                |
+list_id            |
 name                |
 category            |
 rating
@@ -38,5 +39,4 @@ ___________________
 
 A user has one list.
 A list has many list-items and one user.
-list items have one list, and one user.
-
+list items have one list.
