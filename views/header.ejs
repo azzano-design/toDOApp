@@ -1,6 +1,6 @@
 <h1>To-do App</h1>
 <% if(user) { %>
-  <form method="GET" action="/users/<%= user.id %>">
+  <form method="GET" action="/users/<%= user.username %>">
     <button type="submit">Dashboard</button>
   </form>
   <form method="POST" action="/logout">

@@ -9,6 +9,8 @@ const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
 const cookieSession = require("cookie-session");
+const bcrypt      = require('bcrypt');
+const flash       = require('connect-flash');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -39,6 +41,11 @@ app.use(cookieSession({
   name: 'session',
   keys: [process.env.SESSION_SECRET_KEY || "some secret key"]
 }));
+app.use(flash());
+
+
+// Mount all resource routes
+app.use("/api/users", usersRoutes(knex));
 
 
 function generateRandomString() {
@@ -52,14 +59,15 @@ function generateRandomString() {
   return randomString;
 }
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
   let templateVars = {user: req.session.user};
   res.render("index", templateVars);
 });
+
+
+
 
 // Register Page
 app.get('/register', (req, res) => {
@@ -71,23 +79,47 @@ app.post("/register", (req, res) => {
   let id = generateRandomString();
   let firstName = req.body.firstname;
   let lastName = req.body.lastname;
+  let username = req.body.username;
   let email = req.body.email;
-  let password = req.body.password;
 
-  knex('users').where({email: email}).then(function(users){
-    if(users.length) {
-      res.status(400).send('Email already exists!');
+  if(!firstName || !lastName || !username || !email || !req.body.password) {
+    res.redirect("/register");
+    return;
+  }
+  knex('users').where({username: username}).orWhere({email: email}).then(function(users){
+    if (users.length) {
+      res.status(400).send('Username already exists!');
     } else {
-      knex('users').insert({firstname: firstName, lastname: lastName, email: email, password: password})
-      .then(function(results){
-        res.redirect("/login");
-      })
-      .catch(function(err){
-        console.log(err);
-      })
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+          if (err) {
+            console.log("bcrypt err:", err);
+            res.status(500).send("oh god bcrypt has The Mummy's Curse, why oh why");
+            return;
+          }
+          knex('users').insert({
+            firstname: firstName,
+            lastname: lastName,
+            email: email,
+            password: hash,
+            username: username
+          })
+          .then(function(results){
+            res.redirect("/login");
+          })
+          .catch(function(err){
+            console.log("database what now", err);
+            res.status(500).send("database ain't based; prolly yo data was bad");
+          })
+        });
+      });
     }
   })
 })
+
+
+
+
 
 // Login Page
 app.get("/login", (req, res) => {
@@ -100,27 +132,31 @@ app.post("/login", (req, res) => {
   let userPassword = req.body.password;
   const cookiename = req.session;
 
-
-
   knex('users').where({email: userEmail}).then(function(users){
-    if(users.length) {
+    if (users.length) {
       let user = users[0];
-      if(user.password === userPassword) {
-        req.session.user = {id: user.id, firstname: user.firstname, lastname: user.lastname, email: user.email};
+      if (bcrypt.compareSync(userPassword, user.password)) {
+        req.session.user = {id: user.id, firstname: user.firstname, lastname: user.lastname, email: user.email, username: user.username};
         console.log(req.session.user);
-        res.redirect('/users/'+user.id);
+        res.redirect('/users/'+user.username);
         return;
       } else {
+        // pw didn't match the hashed-pass in the DB
         res.status(400).send('Email or Password are incorrect!');
         return;
       }
+    } else {
+      // no users found for this email
+      res.status(400).send('Email or Password are incorrect!');
+      return;
     }
-    res.status(400).send('Email does not exist!');    //
-  })
-})
+  });
+});
+
+
 
 // Dashboard Page
-app.get("/users/:id", (req, res) => {
+app.get("/users/:username", (req, res) => {
   if(req.session){
     let templateVars = {user: req.session.user};
     res.render("dashboard",templateVars);
@@ -128,6 +164,8 @@ app.get("/users/:id", (req, res) => {
   }
   res.redirect("/login");
 });
+
+
 
 app.post("/logout", (req, res) => {
   req.session = null;
