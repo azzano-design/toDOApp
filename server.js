@@ -8,6 +8,7 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const cookieSession = require("cookie-session");
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -34,21 +35,10 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-
-var users = {
-  "user1": {
-    id: "user1",
-    email: "user@example.com",
-    password: "123"
-    //password: "$2a$10$4EMS7aLyrN71l9HV7igC9eG9pU1mJOzUPme6JzMsnWfyGX5AwcIWK"
-  },
- "user2": {
-    id: "user2",
-    email: "user2@example.com",
-    password: "123"
-    //password: "$2a$10$HjnbCvHTr6UqRQy9g6Ec7.WTupfeBHRUFs4ciz//GzVE3/DH6FCGW"
-  }
-}
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET_KEY || "some secret key"]
+}));
 
 
 function generateRandomString() {
@@ -67,12 +57,14 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  let templateVars = {user: req.session.user};
+  res.render("index", templateVars);
 });
 
 // Register Page
 app.get('/register', (req, res) => {
-  res.render("register");
+  let templateVars = {user: req.session.user};
+  res.render("register", templateVars);
 });
 
 app.post("/register", (req, res) => {
@@ -82,42 +74,65 @@ app.post("/register", (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
-  knex('users').insert({firstname: firstName, lastname: lastName, email: email, password: password})
-  .then(function(results){
-    res.redirect("/login");
-  })
-  .catch(function(err){
-    console.log(err);
+  knex('users').where({email: email}).then(function(users){
+    if(users.length) {
+      res.status(400).send('Email already exists!');
+    } else {
+      knex('users').insert({firstname: firstName, lastname: lastName, email: email, password: password})
+      .then(function(results){
+        res.redirect("/login");
+      })
+      .catch(function(err){
+        console.log(err);
+      })
+    }
   })
 })
 
 // Login Page
 app.get("/login", (req, res) => {
-  res.render("login");
+  let templateVars = {user: req.session.user};
+  res.render("login", templateVars);
 });
 
 app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
+  const cookiename = req.session;
 
-  console.log(userEmail)
-  console.log(userPassword)
 
-  res.redirect("/users");
+
+  knex('users').where({email: userEmail}).then(function(users){
+    if(users.length) {
+      let user = users[0];
+      if(user.password === userPassword) {
+        req.session.user = {id: user.id, firstname: user.firstname, lastname: user.lastname, email: user.email};
+        console.log(req.session.user);
+        res.redirect('/users/'+user.id);
+        return;
+      } else {
+        res.status(400).send('Email or Password are incorrect!');
+        return;
+      }
+    }
+    res.status(400).send('Email does not exist!');    //
+  })
 })
 
 // Dashboard Page
-app.get("/users", (req, res) => {
-  knex.select('*').from('users')
-  .asCallback(function(err, results) {
-    if(err) throw err;
-    let templateVars = {
-      users: results
-    }
-    res.render("dashboard", templateVars);
-    console.log(results);
-  })
+app.get("/users/:id", (req, res) => {
+  if(req.session){
+    let templateVars = {user: req.session.user};
+    res.render("dashboard",templateVars);
+    return;
+  }
+  res.redirect("/login");
 });
+
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+})
 
 
 
