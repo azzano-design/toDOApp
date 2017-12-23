@@ -3,13 +3,9 @@
     <div class="grid-container">
       <div class="grid-x grid-padding-x">
         <div class="large-12 cell">
-          <h2 class="page-header">WELCOME TO YOUR DASHBOARD,</h2>
+          <h3 class="page-header">WELCOME TO YOUR DASHBOARD, <%= user.email %></h3>
           <% include ../partials/search %>
 
-            <%= user.email %>
-            <form method="POST" action="/users/<%= user.username %>/list">
-              <button type="submit">Create List</button>
-            </form>
         </div>
       </div>
       <div class="grid-x grid-padding-x">
