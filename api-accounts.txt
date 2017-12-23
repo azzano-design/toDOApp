@@ -1,0 +1,6 @@
+# Google GMAIL account for registering APIS
+
+user: midtermAPI@gmail.com
+password: APIS!4us
+
+
