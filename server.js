@@ -115,6 +115,8 @@ app.post("/register", (req, res) => {
   let username = req.body.username;
   let email = req.body.email;
 
+
+
   if(!firstName || !lastName || !username || !email || !req.body.password) {
     res.redirect("/register");
     return;
@@ -138,7 +140,7 @@ app.post("/register", (req, res) => {
             username: username
           })
           .then(function(results){
-            res.redirect("/login");
+            res.redirect('/user/'+user.username);
           })
           .catch(function(err){
             console.log("database what now", err);
@@ -157,6 +159,7 @@ app.post("/register", (req, res) => {
 // Login Page
 app.get("/login", (req, res) => {
   let templateVars = {user: req.session.user};
+
   res.render("login", templateVars);
 });
 
@@ -196,8 +199,8 @@ app.post("/users/:username", (req,res) => {
 
 // Dashboard Page
 app.get("/users/:username", (req, res) => {
+  let templateVars = {user: req.session.user};
   if(req.session){
-    let templateVars = {user: req.session.user};
     res.render("dashboard",templateVars);
     return;
   }
