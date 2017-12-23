@@ -140,7 +140,8 @@ app.post("/register", (req, res) => {
             username: username
           })
           .then(function(results){
-            res.redirect("/login");
+
+            res.redirect('/login');
           })
           .catch(function(err){
             console.log("database what now", err);

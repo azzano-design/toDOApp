@@ -1,0 +1,36 @@
+<% include ../partials/head %>
+  <nav class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu accordion-menu" data-responsive-menu="accordion" role="tablist" aria-multiselectable="true" data-accordionmenu="530lit-accordionmenu" data-responsivemenu="583tvr-responsivemenu">
+        <li class="menu-text" role="menuitem">
+          <form method="GET" action="/">
+            <button type="submit">Home</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu">
+        <li>
+          <form method="GET" action="/users">
+            <button type="submit">Dashboard</button>
+          </form>
+        </li>
+        <li>
+          <form method="GET" action="/login">
+            <button type="submit">Login</button>
+          </form>
+        </li>
+        <li>
+          <form method="GET" action="/register">
+            <button type="submit">Register</button>
+          </form>
+        </li>
+        <li>
+          <form method="POST" action="/logout">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>

@@ -1,20 +1,132 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
-  <h1>WELCOME TO YOUR DASHBOARD</h1>
-  <%= user.email %>
-  <form method="POST" action="/users/<%= user.username %>/list">
-    <button type="submit">Create List</button>
-  </form>
+<% include ../partials/header %>
+  <body>
+    <div class="grid-container">
+      <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+          <h2 class="page-header">WELCOME TO YOUR DASHBOARD,</h2>
+          <% include ../partials/search %>
 
-  <ul></ul>
+            <%= user.email %>
+            <form method="POST" action="/users/<%= user.username %>/list">
+              <button type="submit">Create List</button>
+            </form>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="large-4 cell">
+          <span>Filter by:</span>
+          <ul>
+            <li><a href="#">To Eat</a></li>
+            <li><a href="#">To Watch</a></li>
+            <li><a href="#">To Read</a></li>
+            <li><a href="#">To Buy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="accordion" class="grid-x grid-padding-x">
 
-</body>
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-eat>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-watch>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-buy>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-watch>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-read>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+        <!-- List Item -->
+        <div class="todo-list-item large-12 cell">
+          <div class="todo-list-item-header large-12 cell grid-x grid-padding-x" data-catagory-eat>
+            <span>ToDo item</span>
+            <input id="checkBox" type="checkbox">
+          </div>
+          <div class="todo-list-item-content">
+            <p>
+            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+            </p>
+          </div>
+        </div>
+        <!-- List Item END -->
+
+      </div>
+  </body>
 </html>
-
-
-
-
