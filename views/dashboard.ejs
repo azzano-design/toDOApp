@@ -1,8 +1,22 @@
-
-
-
-WELCOME TO YOUR DASHBOARD,
-
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h1>WELCOME TO YOUR DASHBOARD</h1>
   <%= user.email %>
+  <form method="POST" action="/users/<%= user.username %>/list">
+    <button type="submit">Create List</button>
+  </form>
+
+  <ul>
+    <li><%  %></li>
+  </ul>
+
+</body>
+</html>
+
+
+
 

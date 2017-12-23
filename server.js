@@ -66,6 +66,39 @@ app.get("/", (req, res) => {
   res.render("index", templateVars);
 });
 
+//add task to To-do list
+app.post("/", (req, res) => {
+  var task_name = req.body.searchBar;
+  let user = req.session.user;
+  let username = user.username;
+
+  // console.log(user.id);
+
+  knex.select('id').from('list').where('user_id', user.id).then((list_id) => {
+    console.log("list_id", list_id);
+  });
+
+
+
+  // knex.select('id').from('list')
+  // .then((list_id) => {
+  //   var cat_id_promise = knex.select('id').from('categories');
+  //   return Promise.all([list_id, cat_id_promise]);
+  // })
+  // .then(list_row => {
+  //   var list_id = list_row[0];
+  //   var category_id = list_row[1];
+  //   console.log(list_row);
+  //   console.log("test", task_name, list_id, category_id);
+  //   // knex('list_task').insert({
+  //   //   task_name,
+  //   //   list_id,
+  //   //   category_id
+  //   // });
+  //   res.redirect('/users/'+username);       // TODO: orly?
+
+})
+
 
 
 
@@ -151,6 +184,12 @@ app.post("/login", (req, res) => {
       return;
     }
   });
+});
+
+app.post("/users/:username", (req,res) => {
+
+
+
 });
 
 
