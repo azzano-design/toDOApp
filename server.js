@@ -190,6 +190,28 @@ app.post("/login", (req, res) => {
   });
 });
 
+
+
+
+// Dashboard Page
+app.get("/users/:username", (req, res) => {
+  let templateVars = {user: req.session.user};
+  // let userid = templateVars.user.id;
+  // knex.select('list_id').from('list').where('user_id', userid)
+  // .then( function() {
+
+
+  // });
+
+
+  if(req.session){
+    res.render("dashboard",templateVars);
+
+  }
+
+  res.redirect("/login");
+});
+
 app.post("/users/:username", (req,res) => {
  if (!req.body.searchBar) {
   res.status(400).json({error:'life sucks sometimes'})
@@ -201,32 +223,9 @@ app.post("/users/:username", (req,res) => {
 
 
 
-// Dashboard Page
-app.get("/users/:username", (req, res) => {
-  let templateVars = {user: req.session.user};
-  let userid = templateVars.user.id;
-  let userlist = knex.select('list_id').from('list').where('user_id', userid);
-  console.log("userlist", userlist);
-  if(userlist) {
-    console.log("in if");
-    return;
-  } else {
-
-    if(req.session){
-    res.render("dashboard",templateVars);
-    return;
-    }
-    return;
-  }
-
-  res.redirect("/login");
-});
-
-
-
 app.post("/logout", (req, res) => {
   req.session = null;
-  res.redirect("/");
+  res.redirect("/login");
 })
 
 
