@@ -1,12 +1,12 @@
 $(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });;
+  // $.ajax({
+  //   method: "GET",
+  //   url: "/api/users"
+  // }).done((users) => {
+  //   for(user of users) {
+  //     $("<div>").text(user.name).appendTo($("body"));
+  //   }
+  // });;
   $(function () {
     var showClass = 'show';
 
@@ -44,4 +44,23 @@ $(() => {
       $(this).parent().parent().fadeOut();
     });
   } );
+
+  $(function (){
+    // $('.searchBar').submit(function(event) {
+    //   event.preventDefault();
+    //   $.ajax({
+    //     url: `/users/${user.username}`,
+    //     method: 'POST',
+    //     data: $(this).serialize(),
+    //     success: () => {
+    //       console.log("it works", s);
+
+    //     }
+    //   });
+
+    // });
+
+  });
+
+
 });

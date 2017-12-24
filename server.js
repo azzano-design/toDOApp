@@ -191,9 +191,12 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/users/:username", (req,res) => {
-
-
-
+ if (!req.body.searchBar) {
+  res.status(400).json({error:'life sucks sometimes'})
+  return
+ } else {
+   console.log("post user works");
+ }
 });
 
 
@@ -201,10 +204,21 @@ app.post("/users/:username", (req,res) => {
 // Dashboard Page
 app.get("/users/:username", (req, res) => {
   let templateVars = {user: req.session.user};
-  if(req.session){
+  let userid = templateVars.user.id;
+  let userlist = knex.select('list_id').from('list').where('user_id', userid);
+  console.log("userlist", userlist);
+  if(userlist) {
+    console.log("in if");
+    return;
+  } else {
+
+    if(req.session){
     res.render("dashboard",templateVars);
     return;
+    }
+    return;
   }
+
   res.redirect("/login");
 });
 
